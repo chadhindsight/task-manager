@@ -32,31 +32,49 @@ const User = mongoose.model('User', {
                throw new Error('Email is not valid!') 
             }
         }
+    },
+    password: {
+        type:String,
+        required: true,
+        minLength: 7,
+        validate(value){
+            if (value.toLowerCase().includes('password')) {
+                throw new Error('password cannot contain phrase password!')
+            }
+        },
+        trim: true
     }
 })
 
-const me = new User({
-    name: 'Devin'
-})
-
-me.save().then(() => {
-    console.log(me)
-}).catch((error) => {
-    console.log('Error!', error)
-})
-
-// const Task = mongoose.model('Task', {
-//     description: {
-//         type: String
-//     },
-//     completed: Boolean
+// const me = new User({
+//     name: 'Devin',
+//     email: '345@me.DEEZ.com'
 // })
-// const smack = new Task({
-//     description: "Time for your favorite activity",
-//     completed: true
-// })
-// smack.save().then(() => {
-//     console.log(smack)
+
+// me.save().then(() => {
+//     console.log(me)
 // }).catch((error) => {
 //     console.log('Error!', error)
 // })
+
+// Model for tasks
+const Task = mongoose.model('Task', {
+    description: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    completed: {
+        type: Boolean,
+        default: false,
+    }
+})
+const smack = new Task({
+    description: "Time for your favorite activity"
+})
+
+smack.save().then(() => {
+    console.log(smack)
+}).catch((error) => {
+    console.log('Error!', error)
+})
