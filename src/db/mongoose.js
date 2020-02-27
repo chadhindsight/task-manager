@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-// Allows mongoose to connect to db
+const validator = require('validator');
+
 mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
     useNewUrlParser: true,
     useCreateIndex: true
@@ -8,13 +9,27 @@ mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
 const User = mongoose.model('User', {
     name: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     age: {
         type: Number,
+        age: 0,
         validate(value) {
             if(value < 0) {
                 throw new Error("Age must be a positive number")
+            }
+        }
+    },
+    // validator for email
+    email: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+        validate(value) {
+            if(!validator.isEmail(value)) {
+               throw new Error('Email is not valid!') 
             }
         }
     }
