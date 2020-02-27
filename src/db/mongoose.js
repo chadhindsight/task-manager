@@ -24,7 +24,7 @@ me.save().then(() => {
 }).catch((error) => {
     console.log('Error!', error)
 })
-// Add new data to the collection
+
 const them = new User({
     name: 'Nicolle',
     age: 28
