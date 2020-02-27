@@ -16,11 +16,22 @@ const User = mongoose.model('User', {
 
 const me = new User({
     name: 'Andrew',
-    age: 'Mike'
+    age: 27
 })
 
 me.save().then(() => {
     console.log(me)
 }).catch((error) => {
     console.log('Error!', error)
+})
+
+const them = new User({
+    name: 'Nicolle',
+    age: 28
+})
+
+them.save().then(()=>{
+    console.log(them)
+}).catch(error=>{
+    console.log('Error', error)
 })
