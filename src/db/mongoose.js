@@ -57,7 +57,7 @@ const User = mongoose.model('User', {
 //     console.log('Error!', error)
 // })
 
-// Model for tasks
+// Model for tasks!
 const Task = mongoose.model('Task', {
     description: {
         type: String,
