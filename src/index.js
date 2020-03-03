@@ -31,18 +31,20 @@ app.get('/users',(req,res) =>{
 app.get('/users/:id', (req, res) => {
     const _id = req.params.id
 
-    User.findById(_id).then(user=>{
-        if(!user) {
-            return status(404).send()
+    User.findById(_id).then((user) => {
+        if (!user) {
+            return res.status(404).send()
         }
-    }).catch(e=>{
+        res.send(user)
+    }).catch((e) => {
         res.status(500).send()
     })
 })
 // CREATE NEW TASK
 app.post('/tasks', (req,res) =>{
     const task = new Task(req.body)
-
+    res.send(task)
+    
     task.save().then(() => {
         res.status(201)
 
@@ -50,6 +52,14 @@ app.post('/tasks', (req,res) =>{
     }).catch(e => {
         res.status(400)
         res.send(e)
+    })
+})
+// FETCH ALL TASKS
+app.get('/tasks', (req, res) => {
+    User.find({}).then(tasks => {
+        res.send(tasks)
+    }).catch(e => {
+        res.status(500).send()
     })
 })
 
