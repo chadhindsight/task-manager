@@ -16,7 +16,7 @@ const User = mongoose.model('User', {
             }
         }
     },
-    // validator for email!
+    // validator for email
     email: {
         type: String,
         required: true,
