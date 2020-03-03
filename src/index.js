@@ -30,7 +30,15 @@ app.get('/users',(req,res) =>{
 })
 app.get('/users/:id', (req, res) => {
     const _id = req.params.id
+
+    User.findById(_id).then(user=>{
+        if(!user) {
+            return status(404).send()
+        }
+    }).catch(e=>{
+        res.status(500).send()
     })
+})
 // CREATE NEW TASK
 app.post('/tasks', (req,res) =>{
     const task = new Task(req.body)
