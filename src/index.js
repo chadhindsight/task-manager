@@ -22,7 +22,11 @@ app.post('/users', (req, res)=>{
 })
 
 app.get('/users',(req,res) =>{
-    user.find({})
+    User.find({}).then(users =>{
+        res.send(users)
+    }).catch(e=>{
+
+    })
 })
 
 // CREATE NEW TASK
