@@ -8,17 +8,15 @@ const port = process.env.PORT || 3000;
 // Parse JSON for express
 app.use(express.json())
 
-app.post('/users', (req, res)=>{
+app.post('/users', async (req, res)=>{
     const user = new User(req.body)
 
-    user.save().then(()=>{
-        res.status(201)
-        res.send(user)
-    }).catch(e =>{
-        // Always set status before send call
-        res.status(400)
-        res.send(e)
-    })
+    try {
+        await user.save()
+        res.status(201).send(user)
+    } catch(e) {
+        res.status(404).send(error)
+    }
 })
 
 app.get('/users',(req,res) =>{
