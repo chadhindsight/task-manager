@@ -41,24 +41,33 @@ app.get('/users/:id', (req, res) => {
     })
 })
 // CREATE NEW TASK
-app.post('/tasks', (req,res) =>{
+app.post('/tasks', (req, res) => {
     const task = new Task(req.body)
-    res.send(task)
-    
-    task.save().then(() => {
-        res.status(201)
 
-        res.send(task)
-    }).catch(e => {
-        res.status(400)
-        res.send(e)
+    task.save().then(() => {
+        res.status(201).send(task)
+    }).catch((e) => {
+        res.status(400).send(e)
     })
 })
 // FETCH ALL TASKS
 app.get('/tasks', (req, res) => {
-    User.find({}).then(tasks => {
+    Task.find({}).then((tasks) => {
         res.send(tasks)
-    }).catch(e => {
+    }).catch((e) => {
+        res.status(500).send()
+    })
+})
+
+app.get('/tasks/:id', (req, res) => {
+    const taskId = req.params.id
+
+    Task.findById(taskId).then((task) => {
+        if (!task) {
+            return res.status(404).send()
+        }
+        res.send(task)
+    }).catch((e) => {
         res.status(500).send()
     })
 })
