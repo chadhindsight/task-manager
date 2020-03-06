@@ -52,6 +52,20 @@ app.post('/tasks', async (req, res) => {
         res.status(400).send(e)
     }
 })
+// Delete
+app.delete('/users/:id', async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id)
+
+        if(!user) {
+            return res.status(404).send()
+        }
+        res.send(user)
+    }
+    catch (e) {
+        res.status(500).send()
+    }
+})
 
 // FETCH ALL TASKS
 app.get('/tasks', async (req, res) => {
@@ -103,6 +117,7 @@ app.patch('/tasks/:id', async (req, res) => {
         res.status(400).send(e)
     }
 })
+
 
 app.listen(port, () =>{
     console.log(`sesrver is up on ${port}`);
