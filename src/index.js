@@ -91,6 +91,17 @@ app.patch('/tasks/:id', async (req, res) => {
     if(!isValidOperation) {
         return res.status(400).send({error: 'Update invalid'})
     }
+    try {
+        const task = await Task.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true})
+
+        if(!task) {
+            return res.status(404).send();
+        }
+        res.send(task)
+    }
+    catch(e){
+        res.status(400).send(e)
+    }
 })
 
 app.listen(port, () =>{
