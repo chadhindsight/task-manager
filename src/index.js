@@ -8,9 +8,6 @@ const port = process.env.PORT || 3000;
 // Parse JSON for express
 app.use(express.json())
 
-// Create a new router
-const router = new express.Router();
-
 app.post('/users', async (req, res)=>{
     const user = new User(req.body)
 
