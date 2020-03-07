@@ -41,6 +41,22 @@ app.get('/users/:id', async (req, res) => {
         res.status(500).send()
     }
 })
+
+// Delete
+app.delete('/users/:id', async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id)
+
+        if (!user) {
+            return res.status(404).send()
+        }
+        res.send(user)
+    }
+    catch (e) {
+        res.status(500).send()
+    }
+})
+
 // CREATE NEW TASK
 app.post('/tasks', async (req, res) => {
     const task = new Task(req.body)
@@ -50,20 +66,6 @@ app.post('/tasks', async (req, res) => {
         res.status(201).send(task)
     } catch (e) {
         res.status(400).send(e)
-    }
-})
-// Delete
-app.delete('/users/:id', async (req, res) => {
-    try {
-        const user = await User.findByIdAndDelete(req.params.id)
-
-        if(!user) {
-            return res.status(404).send()
-        }
-        res.send(user)
-    }
-    catch (e) {
-        res.status(500).send()
     }
 })
 
