@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre('save', async function(next) {
     const user = this;
     
-    console.log('Just before saving')
+    console.log('Just before saving!')
     
     //next() signals that the middle operation is done and moves on to the next
     next();
