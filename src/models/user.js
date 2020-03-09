@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
      
@@ -41,11 +42,13 @@ const userSchema = new mongoose.Schema({
             trim: true
         }
     })
+// Hash the plain text password
 userSchema.pre('save', async function(next) {
     const user = this;
     
-    console.log('Just before saving!')
-    
+    if(user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8);
+    }
     //next() signals that the middle operation is done and moves on to the next
     next();
 })
