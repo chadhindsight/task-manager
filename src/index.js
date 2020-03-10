@@ -17,10 +17,11 @@ app.listen(port, () => {
 // using bcrypt
 const bcrypt = require('bcrypt')
 
-const myFunction = async () =>{
+const myFunction = async () => {
    const token = jwt.sign({_id: 'wwww'}, 'nicollegotit!');
    console.log(token)
 
-    const data = jwt.verify(token, 'nicollegotit!')
+    const data = jwt.verify(token, 'nicollegotit!', {expiresIn: '7 days'});
+    console.log(data)
 }
 myFunction()
