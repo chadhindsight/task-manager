@@ -48,12 +48,21 @@ const userSchema = new mongoose.Schema({
         }
     }]
 })
-userSchema.methods.getPublicProfile = function () {
-    const user = this;
+
+userSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'owner'
+})
+
+userSchema.methods.toJSON = function () {
+    const user = this
     const userObject = user.toObject()
-    // Doesnt allow user to see password and token after they signin
+
     delete userObject.password
-    delete userObject.tokens    
+    delete userObject.tokens
+
+    return userObject
 }
 
 userSchema.methods.generateAuthToken = async function () {
