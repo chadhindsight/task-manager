@@ -16,7 +16,7 @@ router.post('/tasks', auth, async (req, res) => {
         res.status(400).send(e)
     }
 })
-// GET /tasks?completed=true. Limit & Skip pagination!
+// GET /tasks?completed=true. Limit & Skip pagination
 
 router.get('/tasks', auth, async (req, res) => {
     const match = {}
@@ -30,7 +30,8 @@ router.get('/tasks', auth, async (req, res) => {
             path: 'tasks',
             match,
             options: {
-                limit: parseInt(req.query.limit)
+                limit: parseInt(req.query.limit),
+                skip: parseInt(req.query.skip)
             }
         }).execPopulate()
         res.send(req.user.tasks)
