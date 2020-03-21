@@ -16,7 +16,7 @@ router.post('/tasks', auth, async (req, res) => {
         res.status(400).send(e)
     }
 })
-// GET /tasks?completed=true. Limit & Skip pagination
+// GET /tasks?completed=true. Limit & Skip pagination stuff
 router.get('/tasks', auth, async (req, res) => {
     const match = {}
     const sort = {}
