@@ -18,8 +18,8 @@ router.post('/tasks', auth, async (req, res) => {
 })
 // GET /tasks?completed=true. Limit & Skip pagination 
 router.get('/tasks', auth, async (req, res) => {
-    const match = {}
-    const sort = {}
+    const match = {};
+    const sort = {};
 
     if (req.query.completed) {
         match.completed = req.query.completed === 'true';
