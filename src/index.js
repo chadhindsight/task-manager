@@ -8,9 +8,13 @@ const port = process.env.PORT || 3000
 
 const multer = require('multer')
 const upload = multer({
-    dest: 'images'
+    dest: 'images',
+    limits: {
+        fileSize: 1000000
+    }
 })
-app.post('/upload', upload.single(), (req,res) =>{
+
+app.post('/upload', upload.single('upload'), (req, res) => {
     res.send()
 })
 
@@ -21,15 +25,3 @@ app.use(taskRouter)
 app.listen(port, () => {
     console.log('Server is up on port ' + port)
 })
-
-const Task = require('./models/task')
-const User = require('./models/user')
-
-const main = async () => {
-
-    const user = await User.findById('5e6abd00964e6913838c5701')
-    await user.populate('tasks').execPopulate()
-    console.log(user.tasks)
-}
-
-main()
