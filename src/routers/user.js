@@ -81,7 +81,6 @@ router.delete('/users/me', auth, async (req, res) => {
 })
 
 const upload = multer({
-    dest: 'avatars',
     limits: {
         fileSize: 1000000
     },
@@ -94,7 +93,10 @@ const upload = multer({
     }
 })
 // Has Error handling logic here
-router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
+router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
+    // Get file data process through multer from the obj below
+    req.user.avatar = req.file.buffer
+    await req.user.save()
     res.send()
 }, (error, req, res, next) => {
     res.status(400).send({ error: error.message })
