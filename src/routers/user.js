@@ -93,7 +93,7 @@ const upload = multer({
         cb(undefined, true)
     }
 })
-
+// Has Error handling logic here
 router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
     res.send()
 }, (error, req, res, next) => {
