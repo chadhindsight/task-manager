@@ -92,7 +92,7 @@ const upload = multer({
         cb(undefined, true)
     }
 })
-// Has Error handling logic here
+// Has Error handling logic in here
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
     // Get file data process through multer from the obj below
     req.user.avatar = req.file.buffer
@@ -106,6 +106,22 @@ router.delete('/users/me/avatar', auth, async (req, res) =>{
     req.user.avatar = undefined
     await req.user.save()
     res.send()
+})
+
+// Fetch Image
+router.get('/users/:id/avatar',async (req, res)=>{
+    try{
+        const user = await User.findById(req.params.id)
+
+        if (!user || user.avatar) {
+            throw new Error()
+        }
+        res.set('Content-Type', 'image/jpg')
+        res.send(user.avatar)
+    }
+    catch(err) {
+        res.status(404).send()
+    }
 })
 
 module.exports = router
