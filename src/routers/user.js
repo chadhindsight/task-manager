@@ -113,7 +113,7 @@ router.get('/users/:id/avatar',async (req, res)=>{
     try{
         const user = await User.findById(req.params.id)
 
-        if (!user || user.avatar) {
+        if (!user || !user.avatar) {
             throw new Error()
         }
         res.set('Content-Type', 'image/jpg')
