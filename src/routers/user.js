@@ -1,5 +1,7 @@
 const express = require('express')
 const multer = require('multer')
+// Sharp allows you to process & convert images from users 
+const sharp = require('sharp')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const router = new express.Router()
@@ -94,8 +96,9 @@ const upload = multer({
 })
 // Has Error handling logic in here
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
-    // Get file data process through multer from the obj below
-    req.user.avatar = req.file.buffer
+    const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer()
+
+    req.user.avatar = buffer
     await req.user.save()
     res.send()
 }, (error, req, res, next) => {
@@ -108,7 +111,7 @@ router.delete('/users/me/avatar', auth, async (req, res) =>{
     res.send()
 })
 
-// Fetch Image
+// Fetch Image!
 router.get('/users/:id/avatar',async (req, res)=>{
     try{
         const user = await User.findById(req.params.id)
@@ -116,7 +119,7 @@ router.get('/users/:id/avatar',async (req, res)=>{
         if (!user || !user.avatar) {
             throw new Error()
         }
-        res.set('Content-Type', 'image/jpg')
+        res.set('Content-Type', 'image/png')
         res.send(user.avatar)
     }
     catch(err) {
