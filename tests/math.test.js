@@ -23,3 +23,5 @@ test('Should convert 0 C to 32 F', () => {
     const temp = celsiusToFahrenheit(0)
     expect(temp).toBe(32) 
 })
+
+// NNB: To do async tests, pass done as an arg and call it after your test has finished.
